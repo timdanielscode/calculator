@@ -1,0 +1,411 @@
+<!-- 97044742 -->
+<!-- Tim Daniels -->
+<!DOCTYPE html>
+<html lang="nl">
+	<head>
+		<meta charset="UTF-8">
+		<!-- style voor de rekenmachine -->
+			<style>
+				#calculator {
+					border: solid black 1px;
+					padding: 4px;
+					border-radius: 4px; 
+					width: 400px;
+					margin-left: auto;
+					margin-right: auto;
+					margin-top: 200px;
+				}
+				form {
+					width: 100%;
+				}
+					#calculator input[type="text"] {
+					text-align: right;
+				}
+				#output {
+					background-color: darkseagreen;
+					width: 92%;
+					margin-left: 5px;
+					font-size: 1.3rem;
+					border-radius: 8px;
+					padding-right: 8px;
+				}
+				#buttontable {
+					width: 100%;
+					font-size: 1.0rem;
+				}
+				#buttontable input {
+					width: 100%;
+					height: 32px;
+					padding: 0px;
+				}
+			</style>
+	</head>
+	<body>
+		<!-- html structuur voor de rekenmachine -->
+		<div id="calculator">
+			<form action="index.html" method="post" name="calc">
+			<input type="text" name="output" id="output" value="">
+			<table id="buttontable">
+				<tr>
+					<td>
+						<input type="button" value="AC" 
+						onclick="calculator.setOperator('AC');">
+					</td>
+					<td>
+						<input type="button" value="MR/MC" id="MR/MC" 
+						onclick="calculator.setOperator('MR/MC');">
+					</td>
+					<td>
+						<input type="button" value="M+" 
+						onclick="calculator.setOperator('M+');">
+					</td>
+					<td>
+						<input type="button" value="M-" 
+						onclick="calculator.setOperator('M-');">
+					</td>
+					<td>
+						<input type="button" value="+/-" 
+						onclick="calculator.setOperator('+/-');">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="button" value="7"
+						onclick="calculator.setOperand('7');">
+					</td>
+					<td>
+						<input type="button" value="8"
+						onclick="calculator.setOperand('8');">
+					</td>
+					<td>
+						<input type="button" value="9"
+						onclick="calculator.setOperand('9');">
+					</td>
+					<td>
+						<input type="button" value="*"
+						onclick="calculator.setOperator('*');">
+					</td>
+					<td>
+						<input type="button" value="%"
+						onclick="calculator.setOperator('procent');">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="button" value="4"
+						onclick="calculator.setOperand('4');">
+					</td>
+					<td>
+						<input type="button" value="5"
+						onclick="calculator.setOperand('5');">
+					</td>
+					<td>
+						<input type="button" value="6"
+						onclick="calculator.setOperand('6');">
+					</td>
+					<td>
+						<input type="button" value="/" 
+						onclick="calculator.setOperator('/');">
+					</td>
+					<td>
+						<input type="button" value="X²" 
+						onclick="calculator.setOperator('kwadraat');">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="button" value="1"
+						onclick="calculator.setOperand('1');">
+					</td>
+					<td>
+						<input type="button" value="2"
+						onclick="calculator.setOperand('2');">
+					</td>
+					<td>
+						<input type="button" value="3"
+						onclick="calculator.setOperand('3');">
+					</td>
+					<td>
+						<input type="button" value="-"
+						onclick="calculator.setOperator('-');">
+					</td>
+					<td>
+						<input type="button" value="√" 
+						onclick="calculator.setOperator('√');">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="button" value="."
+						onclick="calculator.setOperand('.');">
+					</td>
+					<td>
+						<input type="button" value="0"
+						onclick="calculator.setOperand('0');">
+					</td>
+					<td>
+						<input type="button" value="=" 
+						onclick="calculator.setOperator('=');">
+					</dt>
+					<td>
+						<input type="button" value="+"
+						onclick="calculator.setOperator('+');">
+					</td>
+					<td>
+						<input type="button" value="π"
+						onclick="calculator.setOperator('π');">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<script>
+		
+			// declaratie voor de classes van de rekenmachine
+			var Calculator = function() {
+				output = document.getElementById("output");
+				document.getElementById("output").disabled = true;
+				document.getElementById("MR/MC").disabled = true;
+				this.operand = "";
+				output.value = 0;
+				check1 = 0;
+				check2 = 0;
+				check3 = 0;
+				check4 = 0;
+				check5 = 0;
+				check6 = 0;
+				check7 = 0;
+				memory = [];
+				memoryVal = 0;
+				checkClick = 0;
+				checkM = 0;	
+				checkMC = 0;
+			}
+			
+			// class voor de operand 
+			Calculator.prototype.setOperand = function(operand) {
+				wortelArray = [];
+				output = document.getElementById("output");
+				checkM = 0;
+				this.operand += operand;
+				output.value = this.operand;
+				if(check1 == 2){
+					outputVal = "";
+					this.operand = "";
+					this.operand += operand;
+					output.value = this.operand;	
+					check1 = 0;
+				}
+				if(check2 == 2){
+					outputVal = "";
+					this.operand = "";
+					this.operand += operand;
+					output.value = this.operand;	
+					check2 = 0;
+				}		
+				if(check3 == 2){
+					outputVal = "";
+					this.operand = "";
+					this.operand += operand;
+					output.value = this.operand;	
+					check3 = 0;
+				}	
+				if(check4 == 2){
+					outputVal = "";
+					this.operand = "";
+					this.operand += operand;
+					output.value = this.operand;	
+					check4 = 0;
+				}					
+				if(check6 == 1) {
+					outputVal = "";
+					this.operand = "";
+					check6 = 2;
+				}
+				if(check6 == 2) {
+					this.operand += operand;
+					output.value = this.operand;
+					check6 = 0;
+				}
+				if(check7 == 1) {
+					outputVal = "";
+					this.operand = "";
+					check7 = 2;
+				}
+				if(check7 == 2) {
+					this.operand += operand;
+					output.value = this.operand;
+					check7 = 0;
+					check1 = 0;
+					check2 = 0;
+					check3 = 0;
+					check4 = 0;
+				}	
+			}
+			
+			// class voor de operator
+			// ik zie elke knop dat GEEN operand is als een operator
+			// de functionaliteiten heb ik hetzelfde gemaakt als de rekenmachine op mijn laptop 
+			Calculator.prototype.setOperator = function(operator) {
+			output = document.getElementById("output");
+				// switch statement voor de operatoren
+				switch(operator) {
+					// case als de keer knop word in gedrukt
+					case("*"):
+						savedOperand = this.operand;
+						this.operand = ""; 
+						savedOperand = output.value;
+						check1 = 1;
+					break;
+					// case als de plus knop word in gedrukt
+					case("+"):
+						savedOperand = this.operand;
+						this.operand = ""; 
+						savedOperand = output.value;
+						check2 = 1;
+					break;
+					// case als de min knop word in gedrukt
+					case("-"):
+						savedOperand = this.operand;
+						this.operand = ""; 
+						savedOperand = output.value;
+						check3 = 1;
+					break;
+					// case als de gedeelddoor knop word in gedrukt
+					case("/"):
+						savedOperand = this.operand;
+						this.operand = ""; 
+						savedOperand = output.value;
+						check4 = 1;
+					break;
+					case("."):
+					// case als de punt/komma knop word in gedrukt
+						savedOperand = this.operand;
+						this.operand = "";
+						check5 = 1;
+					break;
+					// case als de kwadraat knop word in gedrukt
+					case("kwadraat"): 
+						outputVal = output.value * output.value;
+						output.value = outputVal;
+						check6 = 1;
+					break;
+					// case als de wortel knop word in gedrukt
+					case("√"):
+						output.value = Math.sqrt(output.value);
+						check6 = 1;
+					break;
+					// case als de memory plus knop word in gedrukt
+					case("M+"):
+					if(checkM == 0){
+						memory.push(output.value);
+						document.getElementById("MR/MC").disabled = false;
+						lastMemory = memory.slice(-1)[0];
+						memoryVal = parseFloat(memoryVal) + parseFloat(lastMemory);
+						check6 = 1;
+						checkM = 1;
+						checkMC = 0;
+					} else {
+						checkClick++;
+						memoryVal = parseFloat(memoryVal) + parseFloat(lastMemory);
+						checkMC = 0;
+					}
+					break;
+					// case als de memory min knop word in gedrukt
+					case("M-"):
+					if(checkM == 0){
+						memory.push(output.value);
+						document.getElementById("MR/MC").disabled = false;
+						lastMemory = memory.slice(-1)[0];
+						memoryVal = parseFloat(memoryVal) - parseFloat(lastMemory);
+						check6 = 1;
+						checkM = 0;
+						checkMC = 0;
+					} else {
+						checkClick++;
+						memoryVal = parseFloat(memoryVal) - parseFloat(lastMemory);
+						checkMC = 0;
+					}
+					break;
+					// case als de memory show/memory clear knop word in gedrukt
+					case("MR/MC"):
+					if(checkMC == 1){
+						output.value = 0;
+						output.value = "geheugen is leeg";
+						memoryVal = 0;
+						checkMC = 0;
+					}
+					else {
+						output.value = "M: "+memoryVal;
+						checkMC = 1;
+					}
+					break;
+					// case als de 'is' knop word in gedrukt
+					case("="): 
+						if(check1 == 1){
+							outputVal = this.operand * savedOperand;
+							output.value = outputVal;
+							check1 = 2;
+							checkPi = 1;
+						}
+						if(check2 == 1) {
+							outputVal = parseFloat(savedOperand) + parseFloat(this.operand);
+							output.value = outputVal;
+							check2 = 0;
+						}
+						if(check3 == 1) {
+							outputVal = parseFloat(savedOperand) - parseFloat(this.operand);
+							output.value = outputVal;
+							check3 = 0;
+						}
+						if(check4 == 1) {
+							outputVal = savedOperand / this.operand;
+							output.value = outputVal;
+							check4 = 0;
+						}
+					break;
+					// case als de procent knop word in gedrukt
+					case("procent"): 
+						if(check1 == 1 || check2 == 1 || check3 == 1 || check4 == 1){
+							outputVal = savedOperand / 100 * savedOperand;
+							output.value = outputVal.toFixed(2);
+							check7 = 1;
+					} 
+					else {
+						this.operand = "";
+						outputVal = 0;
+						output.value = outputVal;
+					}
+					break;
+					// case als de +/- knop word in gedrukt
+					case("+/-"):
+						outputVal = output.value - (output.value * 2);
+						output.value = outputVal;
+					break;
+					// case als de pi knop word in gedrukt
+					case("π"):
+						this.operand = 3.14159265358979323846264338327950288419716939937510
+							58209749445923078164062862089986280348253421170679
+							82148086513282306647093844609550582231725359408128
+							48111745028410270193852110555964462294895493038196
+							44288109756659334461284756482337867831652712019091;
+						output.value = this.operand;
+					break;
+					// case als de reset knop word in gedrukt
+					case("AC"): 
+						output = document.getElementById("output");
+						document.getElementById("MR/MC").disabled = true;
+						output.value = 0;
+						this.operand = ""; 
+						outputVal = "";
+					break;
+				}
+			}
+
+			// oproepen rekenmachine
+			var calculator = new Calculator();
+		
+		</script>
+	</body>
+</html>
+
+
